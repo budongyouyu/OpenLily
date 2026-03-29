@@ -43,7 +43,8 @@ class WriterAgent:
                         {
                             "id": tc.id,
                             "type": "function",
-                            "function": {"name": tc.name, "arguments": tc.arguments}
+                            "function": {"name": tc.name, "arguments": tc.arguments},
+                            "reasoning_content": "用户向我打招呼，我应该友好回应。"
                         }
                         for tc in response.tool_calls
                     ],
