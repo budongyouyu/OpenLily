@@ -1,7 +1,7 @@
 from typing import Callable, Type
 from LLMClient import BaseLLMClient
 from BaseAgent import BaseAgent
-from core.ReactAgent import ReActAgent
+from core.BaseAgent import ReActAgent
 from tools.ToolsRegister import ToolsRegister
 
 class AgentFactory:

@@ -1,7 +1,7 @@
 from tools.ToolsRegister import ToolsRegister
-from tools.write_txt import write_txt
+from tools.save_file_tool import write_txt
 from core.ReactAgent import ReActAgent
-from core.LLMClient import BaseLLMClient
+from core.LLMClient import LLMClient
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,6 +13,6 @@ registry.register(
     write_txt
 )
 
-llm   = BaseLLMClient(temperature=1)
+llm   = LLMClient(temperature=1)
 agent = ReActAgent(llm=llm)
-agent.run("帮我写一首关于春天的诗，并保存到 spring.txt", tool_executor=registry.execute)
+agent.act("帮我写一首关于春天的诗，并保存到 spring.txt", tool_executor=registry.execute)

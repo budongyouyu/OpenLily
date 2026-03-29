@@ -18,7 +18,7 @@ class BaseAgent(ABC):
         pass
 
     @abstractmethod
-    def run(self, user_input: str, tool_executor: Callable = None) -> str:
+    def act(self, user_input: str, tool_executor: Callable = None) -> str:
         # ↑ 加上 tool_executor 参数，子类覆写时签名就对齐了
         pass
 

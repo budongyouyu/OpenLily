@@ -78,6 +78,29 @@ class ToolsRegister:
         """返回所有已注册的工具名称列表"""
         return list(self._tools.keys())
 
+    def to_openai_schema(self) -> list[dict]:
+        """生成 Function Calling 格式的工具 schema"""
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": tool.name,
+                    "description": tool.description,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "string",
+                                "description": "工具的输入内容",
+                            }
+                        },
+                        "required": ["content"],
+                    },
+                },
+            }
+            for tool in self._tools.values()
+        ]
+
     def __len__(self):
         return len(self._tools)
 

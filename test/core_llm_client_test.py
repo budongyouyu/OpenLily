@@ -1,4 +1,4 @@
-from core.LLMClient import BaseLLMClient, OpenAILLMClient
+from core.LLMClient import BaseLLMClient, LLMClient
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -6,7 +6,7 @@ load_dotenv()
 if __name__ == "__main__":
 
     try:
-        llmClient = OpenAILLMClient()
+        llmClient = LLMClient()
 
         exampleMessages = [
             {"role": "system", "content": "你是一个言情小说高手."},
