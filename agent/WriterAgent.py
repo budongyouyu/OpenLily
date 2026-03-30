@@ -19,7 +19,7 @@ class WriterAgent:
             你是一个专业的写作专家，擅长悬疑的故事风格和连续反转的故事设计。
             用户会给你一个主题，你需要构思并写出完整故事。
             故事风格：你擅长在一开头就以极高的悬念来吸引读者，擅长连续反转
-            写完故事后，必须调用 save_to_file 工具将故事保存到文件。
+            写完故事后，必须调用 save_to_file 工具将故事保存到文件，并且文件路径设置在outputs目录中。
             文件名格式：story_主题关键词.txt
         """
 
@@ -30,25 +30,35 @@ class WriterAgent:
             {"role": "user"  , "content": user_input            },
         ]
 
-        print(messages)
-
         while True:
+
             response = self.llm.invoke(messages, tools=self.tools.to_openai_schema())
 
+            print(response.tool_calls)
+
             if response.has_tool_calls:
-                messages.append({
+                assistant_msg = {
                     "role": "assistant",
-                    "content": response.content,
-                    "tool_calls": [
-                        {
-                            "id": tc.id,
-                            "type": "function",
-                            "function": {"name": tc.name, "arguments": tc.arguments},
-                            "reasoning_content": "用户向我打招呼，我应该友好回应。"
+                    "content": response.content or "",  # 确保不是 None
+                }
+
+                # 如果存在 reasoning_content，添加到 assistant 消息级别
+                if hasattr(response, 'reasoning_content') and response.reasoning_content:
+                    assistant_msg["reasoning_content"] = response.reasoning_content
+
+                # tool_calls 数组
+                assistant_msg["tool_calls"] = [
+                    {
+                        "id": tc.id,
+                        "type": "function",
+                        "function": {
+                            "name": tc.name,
+                            "arguments": tc.arguments
                         }
-                        for tc in response.tool_calls
-                    ],
-                })
+                    }
+                    for tc in response.tool_calls
+                ]
+                messages.append(assistant_msg)
 
                 for tc in response.tool_calls:
                     args = json.loads(tc.arguments)

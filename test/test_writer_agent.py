@@ -21,16 +21,19 @@ def test_writer_save_to_file():
     llm = LLMClient()
 
     # 2. 注册工具
-    registry = ToolsRegister()
-    make_save_file_tool(registry, filename="outputs/story.txt")
+    register = ToolsRegister()
+
+    make_save_file_tool(register, filename="../outputs/story.txt")
 
     # 3. 创建 Agent
-    writer = WriterAgent(llm=llm, tools=registry)
+    writer = WriterAgent(llm=llm, tools=register)
 
     # 4. 运行
     result = writer.act(
         "请帮我以《青春的保护色》为主题，写一篇无限流悬疑小说，要求多重反转"
     )
+
+    print(result)
 
     # 5. 验证文件是否生成
     assert os.path.exists("outputs/story.txt"), "❌ 文件未生成"

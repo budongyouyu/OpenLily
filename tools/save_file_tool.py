@@ -3,6 +3,7 @@
 def make_save_file_tool(register: "ToolsRegister", filename: str = "output.txt"):
     """
     创建并注册保存文件工具。
+
     :param register: ToolsRegister 实例
     :param filename: 保存的文件名，默认 output.txt
     """

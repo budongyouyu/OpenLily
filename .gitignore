@@ -1,5 +1,7 @@
 # 环境变量（含 API Key，绝对不能上传）
-.env
+test/.env
+
+outputs/
 
 # Python 缓存
 __pycache__/

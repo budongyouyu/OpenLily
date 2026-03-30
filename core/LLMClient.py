@@ -110,6 +110,8 @@ class LLMClient(BaseLLMClient):
                 tools=tools,
                 tool_choice=tool_choice,
                 stream=False,       # Function Calling 必须关流式
+                timeout=self.timeout,
+                max_tokens=8192
             )
             msg = resp.choices[0].message
 
